@@ -1,0 +1,37 @@
+---
+- name: Hands on Prelim Exam
+  hosts: all
+
+  tasks:
+  - name: Change motd saying Ansible Managed by "student number"
+    lineinfile:
+      path: '/etc/motd'
+      line: 'Ansible Managed by 1813206'
+      state: present
+
+  - name: Create a user with github username
+    user:
+      name: kldnepomuceno-tip
+      state: present
+      password: PrelimExam
+
+  - name: passwordless sudo user
+    lineinfile:
+      path: '/etc/sudoers'
+      line: 'kldnepomuceno-tip ALL=(ALL) NOPASSWD: ALL'
+      state: present
+
+  - name: group sysad2
+    group:
+      name: sysad2
+      state: present
+
+  - name: Add epel release repository
+    dnf: 
+      name: epel-release
+      state: latest
+
+  - name: Install htop
+    dnf:
+      name: htop
+      state: latest
